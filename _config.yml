@@ -1,7 +1,7 @@
 # --- Basic options --- #
 
 # Name of website
-title: xotic.github.io
+title: xotic06.github.io
 
 # Short description of your site
 description: CTF Writeups and RedTeam topics
@@ -23,7 +23,7 @@ navbar-links:
 
 # Image to show in the navigation bar - works best with a square image
 # Remove this parameter if you don't want an image in the navbar
-avatar: "/assets/img/3jd.png"
+# avatar: "/assets/img/3jd.png"
 
 # By default, the image is cut into a circle. You can disable this behaviour by setting 'round-avatar: false'
 round-avatar: true
