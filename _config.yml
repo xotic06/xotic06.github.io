@@ -1,19 +1,19 @@
 # --- Basic options --- #
 
 # Name of website
-title: Apr4h.github.io
+title: xotic.github.io
 
 # Short description of your site
-description: CTF Writeups and sometimes other stuff too
+description: CTF Writeups and RedTeam topics
 
 # Your name to show in the footer
-author: Apra
+author: xotic
 
 # --- List of links in the navigation bar --- #
 
 navbar-links:
-  HTB Profile: "https://www.hackthebox.eu/profile/46633"
-  My Github: "https://github.com/Apr4h"
+  HTB Profile: "https://app.hackthebox.com/users/855594"
+  My Github: "https://github.com/xotic06"
   Resources:
     - Beautiful Jekyll: "https://beautifuljekyll.com"
     - Learn markdown: "https://www.markdowntutorial.com/"
@@ -39,10 +39,10 @@ round-avatar: true
 # Uncomment the links you want to show and add your information to each one.
 # If you don't want to show a link to an RSS feed, set rss to "false".
 social-network-links:
-  email: "apr4h.ctf@gmail.com"
-  github: Apr4h
-  rss: true
-  twitter: _Apr4h
+  email: "mau.sanjuanp@gmail.com"
+  github: xotic
+  rss: false
+# twitter: _Apr4h
 #  reddit: yourname
 #  linkedin: daattali
 #  xing: yourname
@@ -70,7 +70,7 @@ share-links-active:
 
 # How to display the link to your website in the footer
 # Remove this if you don't want a link in the footer
-url-pretty: "https://apr4h.githiub.io"
+url-pretty: "https://xotic.githiub.io"
 
 # Create a "tags" index page and make tags on each post clickable
 link-tags: true
