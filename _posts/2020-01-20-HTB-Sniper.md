@@ -12,7 +12,8 @@ This one wasn't too bad compared to others :)
 
 
 ## Summary
-![Image](/assets/img/sniper/sniper_info.PNG)
+![Support](https://github.com/user-attachments/assets/f152aae3-ed05-4608-a0f9-310431fcc139)
+
 
 - Directory brute-force
 - Remote File Inclusion (via SMB)
