@@ -123,12 +123,18 @@ El archivo que destaca es el `UserInfo.exe` que no sabemos lo que hace aún. Al 
 [TIP] Para instalar el framework de dotnet y poder ejecutar los archivos .exe en nuestro sistema linux, recomiendo ver la explicacion que da ippsec en su video: [dotnet install](https://youtu.be/iIveZ-raTTQ?si=OZjvqJ8SxeI_AwxI&t=3289)
 
 Al ejecutar el binario vemos las opciones que nos permite ejecutar:
+
 ![Pasted image 20250619170243](https://github.com/user-attachments/assets/160ef9d6-0de0-4c90-971e-13a7460bcce4)
+
 Al querer ejecutar algun comando nos dice que ocurrio un error:
+
 ![Pasted image 20250619170354](https://github.com/user-attachments/assets/4889c9e7-9f69-4a8b-9b61-35052496c309)
+
 Ya que es un error de conexión, podemos inferir que se está intentando de realizar algún tipo de query a algún lado.
+
 Si capturamos el trafico con wireshark, seleccionando la interfaz `any` y filtramos por `dns`, podemos ver a donde se está realizando la query:
 ![Pasted image 20250619170641](https://github.com/user-attachments/assets/adf20f1b-b5f5-4489-898d-705ff7c906b9)
+
 Se está realizando hacia `support.htb`, entonces lo agregamos a nuestro `/etc/hosts`:
 
 ```
@@ -136,11 +142,17 @@ sudo echo '10.10.11.174 support.htb' >> /etc/hosts
 ```
 
 Ahora al intentar utilizar el binario nos da otro tipo de error:
+
 ![Pasted image 20250619170917](https://github.com/user-attachments/assets/7127e8dd-9634-4d0c-ba30-cd39e7ac9ebf)
+
 Ahora nos da "No Such Object" por lo que ahora no encuentra lo que le estamos pidiendo que busque. Ya que las querys ahora estarían corriendo por la interfaz tun0, podemos capturar el trafico:
+
 ![Pasted image 20250619171120](https://github.com/user-attachments/assets/95d197b1-d10d-4e9f-8aad-9cacf1daaacb)
+
 Obtenemos nuevo trafico y podemos ver las querys, varias son por LDAP, podemos ver una en especial que contiene un usuario `support\ldap`:
+
 ![Pasted image 20250619171239](https://github.com/user-attachments/assets/bbc6f202-e5b7-4fda-9969-0dcb25e02a2d)
+
 Viendo este paquete y filtrando podemos ver una contraseña en texto plano ya que está utilizando una autenticación simple.
 
 ```
@@ -160,6 +172,7 @@ netexec smb 10.10.11.174 -u ldap -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' --rid
 ```
 
 ![Pasted image 20250619171923](https://github.com/user-attachments/assets/0887066a-38cb-4c70-b564-18762f5af7dc)
+
 Esto es un paso extra de reconocimiento para tener distintos vectores de ataque, ya que con una lista de usuarios válidos se podria realizar un password sprying.
 Sin embargo, al tener ya credenciales válidas se puede utilizar la herramienta de bloodhound para ver como está funcionando todo el DC por dentro y también ver si tenemos algo interesante para ver.
 En mi caso estoy utilizando el bloodhound community edition (bloodhound-ce), por lo que utilizo el ingestor compatible para mi version:
@@ -169,8 +182,11 @@ bloodhound-ce-python -u ldap -p 'nvEfEK16^1aM4$e7AclUf8x$tRWxPWO1%lmz' -ns 10.10
 ```
 
 Al tener los archivos .json, los importamos dentro de bloodhound y podemos ver algo interesante como:
+
 ![Pasted image 20250619172547](https://github.com/user-attachments/assets/092969be-86b3-4a15-87d2-3d87e4423837)
+
 El usuario support, que es parte de el grupo Shared Support Accounts, que a su vez tiene permisos de GenericAll sobre el DC. Esto es crítico, ya que al tener GenericAll sobre un objeto como un computador, se pueden realizar ataques como un shadow credential attack, o el ataque que realizaremos que es obtener un ticket impersonando al usuario Administrator.
+
 Los pasos para realizar este ataque son:
 - Primero hacia la máquina Windows debemos importar `powermad.ps1` y `PowerView.ps1`
 - Luego creamos un computador
@@ -185,7 +201,9 @@ ldapsearch -x -H ldap://support.htb -D 'ldap@support.htb' -w 'nvEfEK16^1aM4$e7Ac
 ```
 
 Buscando filtrando por el CN=Support encontramos una contraseña en el campo de información y no en el campo de descripción como se encuentra normalmente en otros escenarios:
+
 ![Pasted image 20250619191853](https://github.com/user-attachments/assets/c73d722e-5e19-4100-9e57-301a5a163d84)
+
 Al tener estas credenciales podemos comprobar que tenemos acceso por WinRM:
 
 ```
