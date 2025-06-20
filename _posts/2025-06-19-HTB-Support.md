@@ -103,7 +103,7 @@ smbclient //10.10.11.174/support-tools -U noexiste
 ![Pasted image 20250619163835](https://github.com/user-attachments/assets/90a5d015-7694-447a-a40f-4358adbfc820)
 
 Podemos analizar cada uno de estos ejecutables, algunos no tiene caso analizarlos ya que son ejecutables portables o setups, asi que asi ya descartamos un par.
-El archivo mas interesante que se puede sacar de esta lista es `UserInfo.exe.zip` ya que no es un binario conocido como lo puede ser Putty por ejemplo.
+El archivo mas interesante que se puede sacar de esta lista es `UserInfo.exe.zip` ya que no es un binario conocido como lo puede ser `Putty` por ejemplo.
 Nos transferimos el archivo:
 
 ```
@@ -113,13 +113,14 @@ get UserInfo.exe.zip
 Y utilizamos unzip para obtener su contenido:
 
 ```
-uzip UserInfo.exe
+unzip UserInfo.exe
 ```
 
 ![Pasted image 20250619165933](https://github.com/user-attachments/assets/66cf7a7b-c6c8-48b8-94db-a78529502f3f)
 
 El archivo que destaca es el `UserInfo.exe` que no sabemos lo que hace aún. Al ser un archivo .exe en condiciones normales no se podría ejecutar en una maquina linux, pero al tener instalado el framework de dotnet si lo podriamos ejecutar sin ningun problema.
-[TIP] Para instalar el framework de dotnet y poder ejecutar los archivos .exe en nuestro sistema linux, recomiendo ver la explicacion que de ippsec en su video: [dotnet install](https://youtu.be/iIveZ-raTTQ?si=OZjvqJ8SxeI_AwxI&t=3289)
+
+[TIP] Para instalar el framework de dotnet y poder ejecutar los archivos .exe en nuestro sistema linux, recomiendo ver la explicacion que da ippsec en su video: [dotnet install](https://youtu.be/iIveZ-raTTQ?si=OZjvqJ8SxeI_AwxI&t=3289)
 
 Al ejecutar el binario vemos las opciones que nos permite ejecutar:
 ![Pasted image 20250619170243](https://github.com/user-attachments/assets/160ef9d6-0de0-4c90-971e-13a7460bcce4)
